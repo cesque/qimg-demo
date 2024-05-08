@@ -1,0 +1,15 @@
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.item {
+    display: flex;
+    gap: 5px;
+}
+
+.boxSize {
+    margin: 0;
+    font-weight: 500;
+}

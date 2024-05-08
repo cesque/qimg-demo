@@ -1,0 +1,16 @@
+.main {
+    flex-shrink: 1;
+    padding: 0;
+    margin: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    background: #dfe4ea;
+
+    height: 100%;
+
+    padding: 50px;
+}
