@@ -134,7 +134,8 @@ export default function Controls() {
         return result
     }, [algorithms])
 
-    const showGradientScale = image && selectedAlgorithmName == 'gradimg'
+    const showGradientScale = image
+        && (selectedAlgorithmName == 'gradimg' || selectedAlgorithmName == 'gradrgb')
 
     return <section className={ styles.controls }>
         <div className={ styles.row }>

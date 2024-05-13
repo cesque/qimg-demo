@@ -1,4 +1,4 @@
-import { GradImg, QImg } from 'image-compression-algorithms';
+import { GradImg, GradRgb, QImg } from 'image-compression-algorithms';
 import React, { createContext, useEffect, useMemo, useState } from 'react'
 
 export const ControlsContext = createContext()
@@ -12,6 +12,7 @@ const demoFiles = [
 const algorithms = {
     qimg: QImg,
     gradimg: GradImg,
+    gradrgb: GradRgb,
 }
 
 export const ControlsProvider = ({ children }) => {
