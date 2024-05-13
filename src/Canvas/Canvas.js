@@ -1,39 +1,52 @@
-import React, { useContext, useEffect } from 'react'
-import QCompress from '../qcompress'
-import styles from './Canvas.module.scss'
+import { createRef, useContext, useLayoutEffect } from 'react'
+import styles from './Canvas.module.css'
 import { ControlsContext } from '../Controls/ControlsContext'
 
 export default function Canvas() {
-    const { demoFile, boxSize, image } = useContext(ControlsContext)
-    const canvasRef = React.createRef()
+    const {
+        image,
+        compressedImage
+    } = useContext(ControlsContext)
+    const canvasRef = createRef()
 
-    async function drawImage( element) {
+    async function drawImage(element) {
+        if (!image || !canvasRef.current) return
+
         let ctx = element.getContext('2d')
+        ctx.willReadFrequently = true
 
         element.width = image.width
         element.height = image.height
-        ctx.drawImage(image, 0, 0)
+        ctx.putImageData(image, 0, 0)
     }
     
     async function init() {
-        await drawImage(canvasRef.current)
+        if (image) await drawImage(canvasRef.current)
         drawCompressed(canvasRef.current)
     }
 
     function drawCompressed(element) {
-        let ctx = element.getContext('2d')
+        if (!compressedImage || !canvasRef.current) return
 
-        let imageData = ctx.getImageData(0, 0, element.width, element.height)
+        const newImageData = compressedImage.toImageData()
 
-        let compressor = new QCompress(boxSize)
-        let newImageData = compressor.compress(ctx, imageData)
+        if (!image) {
+            element.width = newImageData.width
+            element.height = newImageData.height
+        }
+
+        const ctx = element.getContext('2d')
+        ctx.willReadFrequently = true
+
+        ctx.fillStyle = 'black'
+        ctx.fillRect(0, 0, element.width, element.height)
 
         ctx.putImageData(newImageData, 0, 0)
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         init()
-    }, [image, boxSize])
+    }, [compressedImage])
 
     return <section className={ styles.section }>
         <canvas className={ styles.canvas } ref={ canvasRef } />
