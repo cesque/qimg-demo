@@ -1,4 +1,4 @@
-import { GradImg, GradRgb, QImg } from 'image-compression-algorithms';
+import { GradImg, GradRgb, QImg } from '@cesque/image-compression-algorithms'
 import React, { createContext, useEffect, useMemo, useState } from 'react'
 
 export const ControlsContext = createContext()
@@ -24,7 +24,7 @@ export const ControlsProvider = ({ children }) => {
     const [compressedImage, setCompressedImage] = useState(undefined)
 
     const algorithm = useMemo(() => {
-        return new algorithms[selectedAlgorithmName]
+        return new algorithms[selectedAlgorithmName]()
     }, [selectedAlgorithmName])
 
     async function loadImage(url) {
@@ -75,7 +75,7 @@ export const ControlsProvider = ({ children }) => {
         }
 
         return results
-    }, [algorithms])
+    }, [])
 
     const value = {
         algorithms,
