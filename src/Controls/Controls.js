@@ -122,6 +122,21 @@ export default function Controls() {
         a.click()
     }
 
+    function downloadAsImage() {
+        const imageData = compressedImage.toImageData()
+
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        canvas.width = imageData.width
+        canvas.height = imageData.height
+        ctx.putImageData(imageData, 0, 0)
+
+        const a = document.createElement('a')
+        a.href = canvas.toDataURL('image/jpeg')
+        a.download = `image.jpeg`
+        a.click()
+    }
+
     const fileAccept = useMemo(() => {
         const result = []
 
@@ -152,6 +167,10 @@ export default function Controls() {
 
             <div className={ styles.item }>
                 <button type="button" onClick={ download }>Download</button>
+            </div>
+
+            <div className={ styles.item }>
+                <button type="button" onClick={ downloadAsImage }>Download as JPEG</button>
             </div>
         </div>
 
